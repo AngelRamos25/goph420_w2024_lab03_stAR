@@ -5,318 +5,296 @@ from goph420_lab03 import regression as rgr
 
 def main():
 
-    nD = 50
     t, y = np.loadtxt('M_data.txt', float, unpack=True)
     # a, e, rsq = rgr.multi_regress(y, Z)
 
     # Plotting raw data:
     plt.figure(figsize=(20, 6))
-    C = plt.plot(t, y, '.')
+    plt.plot(t, y, '.')
     plt.grid(min)
-    plt.ylabel('Magnitude')
-    plt.xlabel('Hours')
-    plt.title('Seismic events over the whole week.')
+    plt.ylabel('Magnitude', fontsize=20)
+    plt.xlabel('Hours', fontsize=20)
+    plt.xticks(fontsize=20)
+    plt.yticks(fontsize=20)
+    plt.title('Seismic events over the whole week.', fontsize=20)
     # Saving the image on the directory /figures. This section is commented since it could be an error if run in other computer:
     # plt.savefig(
     #    'C:/Users/mange/Desktop/UoC/Winter 2024/GOPH_420/goph420_w2024_lab03_stAR/figures/raw_data.pdf')
-    plt.show()
+    # plt.show()
 
     # Plotting raw data divided by days:
-    plt.figure(figsize=(30, 20))
-    C2 = plt.subplot(5, 1, 1)
+    plt.figure(figsize=(20, 20))
+    plt.subplot(5, 1, 1)
     plt.plot(t[0:3928], y[0:3928], '.')
     plt.grid(min)
-    plt.ylabel('Magnitude - Day 1')
-    plt.title('Seismic events of each day.')
+    plt.ylabel('M - Day 1', fontsize=20)
+    plt.title('Seismic events of each day.', fontsize=30)
     plt.ylim([-1.5, 1.5])
-    plt.axvline(0, color='r')
 
     plt.subplot(5, 1, 2)
     plt.plot(t[3929:5684], y[3929:5684], '.')
     plt.grid(min)
-    plt.ylabel('Magnitude - Day 2')
+    plt.ylabel('M - Day 2', fontsize=20)
     plt.ylim([-1.5, 1.5])
-    plt.axvline(34, color='r')
-    plt.axvline(34.05, color='b')
-    plt.axvline(46, color='b')
-    plt.axvline(46.05, color='g')
 
     plt.subplot(5, 1, 3)
     plt.plot(t[5685:6974], y[5685:6974], '.')
     plt.grid(min)
-    plt.ylabel('Magnitude - Day 3')
+    plt.ylabel('M - Day 3', fontsize=20)
     plt.ylim([-1.5, 1.5])
-    plt.axvline(72, color='g')
 
     plt.subplot(5, 1, 4)
     plt.plot(t[6975:9536], y[6975:9536], '.')
     plt.grid(min)
-    plt.ylabel('Magnitude - Day 4')
+    plt.ylabel('M - Day 4', fontsize=20)
     plt.ylim([-1.5, 1.5])
-    plt.axvline(72, color='k')
-    plt.axvline(96, color='k')
 
     plt.subplot(5, 1, 5)
     plt.plot(t[9537:13390], y[9537:13390], '.')
     plt.grid(min)
-    plt.xlabel('Time (hours)')
-    plt.ylabel('Magnitude- Day 5')
+    plt.xlabel('Time (hours)', fontsize=30)
+    plt.ylabel('M - Day 5', fontsize=20)
     plt.ylim([-1.5, 1.5])
-    plt.axvline(96, color='m')
-    plt.axvline(120, color='m')
 
     # Saving the image on the directory /figures. This section is commented since it could be an error if run in other computer:
     # plt.savefig(
-    #    'C:/Users/mange/Desktop/UoC/Winter 2024/GOPH_420/goph420_w2024_lab03_stAR/figures/raw_data_cuts.pdf')
-    plt.show()
+    #    'C:/Users/mange/Desktop/UoC/Winter 2024/GOPH_420/goph420_w2024_lab03_stAR/figures/raw_data_days.pdf')
+    # plt.show()
 
-    # Making a graph to show how we can separate the intervals by using abs()
+    # Making a graph to show how we can separate the intervals
     plt.figure(figsize=(20, 6))
-    C3 = plt.plot(t, np.abs(y), '.')
+    plt.plot(t, y, '.')
     plt.grid(min)
-    plt.ylabel('|Magnitude|')
-    plt.title('Seismic events over the whole week.')
+    plt.ylabel('Magnitude', fontsize=20)
+    plt.title('Seismic events over the whole week.', fontsize=20)
     plt.axvline(34, color='k')
     plt.axvline(46, color='k')
     plt.axvline(72, color='k')
     plt.axvline(96, color='k')
+    plt.xticks(fontsize=20)
+    plt.yticks(fontsize=20)
     plt.text(10, 1.55, "Section 1", fontsize=15)
-    plt.text(36, 1.55, "Section 2", fontsize=15)
+    plt.text(35, 1.55, "Section 2", fontsize=15)
     plt.text(57, 1.55, "Section 3", fontsize=15)
     plt.text(80, 1.55, "Section 4", fontsize=15)
     plt.text(100, 1.55, "Section 5", fontsize=15)
     # Saving the image on the directory /figures. This section is commented since it could be an error if run in other computer:
     # plt.savefig(
-    #    'C:/Users/mange/Desktop/UoC/Winter 2024/GOPH_420/goph420_w2024_lab03_stAR/figures/raw_data_cuts_abs.pdf')
-    plt.show()
+    #    'C:/Users/mange/Desktop/UoC/Winter 2024/GOPH_420/goph420_w2024_lab03_stAR/figures/raw_data_cuts.pdf')
+    # plt.show()
 
     # Plotting histograms to construct M vs N for each interval of time.
-    y1 = np.abs(y[0:3928])
-    y2 = np.abs(y[3929:5684])
-    y3 = np.abs(y[5685:6974])
-    y4 = np.abs(y[6975:9536])
-    y5 = np.abs(y[9537:13390])
+    y1 = (y[0:3928])
+    y2 = (y[3929:5684])
+    y3 = (y[5685:6974])
+    y4 = (y[6975:9536])
+    y5 = (y[9537:13390])
 
-    t1 = t[0:3928]
-    t2 = t[3929:5684]
-    t3 = t[5685:6974]
-    t4 = t[6975:9536]
-    t5 = t[9537:13390]
+    M = np.arange(-0.5, 1.3, 0.1)
 
-    plt.figure(figsize=(20, 20))
-    C4 = plt.subplot(5, 1, 1)
-    counts1, M1, bar1 = plt.hist(y1, edgecolor='white', bins=nD)
-    plt.title('Histograms of seismic events per magnitude')
-    plt.ylabel('Frecuency - Day 1')
+    # Calculating graphs M vs N for section 1:
+    N1 = np.zeros(len(M))
+
+    for j in range(0, len(M), 1):
+        count = 0
+        for i in range(0, len(y1), 1):
+            if y1[i] > M[j]:
+                count += 1
+        N1[j] = count
+    plt.figure(figsize=(20, 7))
+    plt.semilogy(M, N1, 'o', label="Measured events")
+    plt.xlabel("Magnitude order - M", fontsize=20)
+    plt.ylabel("Number of events - N", fontsize=20)
+    plt.title("Graph M vs N - Section 1", fontsize=20)
+    plt.xticks(fontsize=20)
+    plt.yticks(fontsize=20)
     plt.grid(min)
 
-    plt.subplot(5, 1, 2)
-    counts2, M2, bars2 = plt.hist(y2, edgecolor='white', bins=nD)
-    plt.ylabel('Frecuency - Day 2')
-    plt.grid(min)
+    # Building matrix A for Section 1:
+    Z1 = np.ones([len(N1), 2])
+    Z1[:, 1] = Z1[:, 1]*(-M)
 
-    plt.subplot(5, 1, 3)
-    counts3, M3, bars3 = plt.hist(y3, edgecolor='white', bins=nD)
-    plt.ylabel('Frecuency- Day 3')
-    plt.grid(min)
+    # Solving for a and b for Section 1:
+    a1, e1, R21 = rgr.multi_regress(np.log10(N1), Z1)
+    print(f"Values of a and b for Section 1 are: {a1}")
+    print(f"Coefficient of determination for Section 1 is: {R21}")
 
-    plt.subplot(5, 1, 4)
-    counts4, M4, bars4 = plt.hist(y4, edgecolor='white', bins=nD)
-    plt.ylabel('Frecuency - Day 4')
-    plt.grid(min)
-
-    plt.subplot(5, 1, 5)
-    counts5, M5, bars5 = plt.hist(y5, edgecolor='white', bins=nD)
-    plt.xlabel('Magnitude')
-    plt.ylabel('Frecuency - Day 5')
-    plt.grid(min)
-
+    # Plotting results for Section 1:
+    N1_est = np.matmul(Z1, a1)
+    plt.plot(M, 10**N1_est, '-r',
+             label=f"LSQR | $a$ = {np.round(a1[0], 3)}, $b$ = {np.round(a1[1], 3)}, $R^2$ = {R21}")
+    plt.legend(fontsize=20)
     # Saving the image on the directory /figures. This section is commented since it could be an error if run in other computer:
     # plt.savefig(
-    #    'C:/Users/mange/Desktop/UoC/Winter 2024/GOPH_420/goph420_w2024_lab03_stAR/figures/histograms.pdf')
-    plt.show()
+    #    'C:/Users/mange/Desktop/UoC/Winter 2024/GOPH_420/goph420_w2024_lab03_stAR/figures/MvsN_S1.pdf')
+    # plt.show()
 
-    # Plotting graphs M vs N:
 
-    # For Section 1:
-    N1 = np.zeros([len(M1)-1, 1])
+# Calculating graphs M vs N for section 2:
+    N2 = np.zeros(len(M))
 
-    for i in range(0, len(M1)-1, 1):
-        N1[i] = sum(counts1[(0 + i):(len(M1)-1)])
-    M1 = M1[0:-1]
-
-    plt.figure(figsize=(30, 20))
-    C4 = plt.subplot(3, 2, 1)
-    plt.semilogy(M1, N1, '.')
-    plt.xlabel('M')
-    plt.ylabel('log(N)')
-    plt.title('M vs N graph for section 1')
+    for j in range(0, len(M), 1):
+        count = 0
+        for i in range(0, len(y2), 1):
+            if y2[i] > M[j]:
+                count += 1
+        N2[j] = count
+    plt.figure(figsize=(20, 7))
+    plt.semilogy(M, N2, 'o', label="Measured events")
+    plt.xlabel("Magnitude order - M", fontsize=20)
+    plt.ylabel("Number of events - N", fontsize=20)
+    plt.title("Graph M vs N - Section 2", fontsize=20)
+    plt.xticks(fontsize=20)
+    plt.yticks(fontsize=20)
     plt.grid(min)
 
-    # For Section 2:
-    N2 = np.zeros([len(M2)-1, 1])
+    # Building matrix A for Section 2:
+    Z2 = np.ones([len(N2), 2])
+    Z2[:, 1] = Z2[:, 1]*(-M)
 
-    for i in range(0, len(M2)-1, 1):
-        N2[i] = sum(counts2[(0 + i):(len(M2)-1)])
-    M2 = M2[0:-1]
+    # Solving for a and b for Section 2:
+    a2, e2, R22 = rgr.multi_regress(np.log10(N2), Z2)
+    print(f"Values of a and b for Section 2 are: {a2}")
+    print(f"Coefficient of determination for Section 2 is: {R22}")
 
-    plt.subplot(3, 2, 2)
-    plt.semilogy(M2, N2, '.')
-    plt.xlabel('M')
-    plt.ylabel('log(N)')
-    plt.title('M vs N graph for section 2')
-    plt.grid(min)
-
-    # For Section 3:
-    N3 = np.zeros([len(M3)-1, 1])
-
-    for i in range(0, len(M3)-1, 1):
-        N3[i] = sum(counts3[(0 + i):(len(M3)-1)])
-    M3 = M3[0:-1]
-
-    plt.subplot(3, 2, 3)
-    plt.semilogy(M3, N3, '.')
-    plt.xlabel('M')
-    plt.ylabel('log(N)')
-    plt.title('M vs N graph for section 3')
-    plt.grid(min)
-
-    # For Section 4:
-    N4 = np.zeros([len(M4)-1, 1])
-
-    for i in range(0, len(M4)-1, 1):
-        N4[i] = sum(counts4[(0 + i):(len(M4)-1)])
-    M4 = M4[0:-1]
-
-    plt.subplot(3, 2, 4)
-    plt.semilogy(M4, N4, '.')
-    plt.xlabel('M')
-    plt.ylabel('log(N)')
-    plt.title('M vs N graph for section 4')
-    plt.grid(min)
-
-    # For Section 5:
-    N5 = np.zeros([len(M5)-1, 1])
-
-    for i in range(0, len(M5)-1, 1):
-        N5[i] = sum(counts5[(0 + i):(len(M5)-1)])
-    M5 = M5[0:-1]
-
-    plt.subplot(3, 2, 5)
-    plt.semilogy(M5, N5, '.')
-    plt.xlabel('M')
-    plt.ylabel('log(N)')
-    plt.title('M vs N graph for section 5')
-    plt.grid(min)
+    # Plotting results for Section 2:
+    N2_est = np.matmul(Z2, a2)
+    plt.plot(M, 10**N2_est, '-r',
+             label=f"LSQR | $a$ = {np.round(a2[0], 3)}, $b$ = {np.round(a2[1], 3)}, $R^2$ = {R22}")
+    plt.legend(fontsize=20)
     # Saving the image on the directory /figures. This section is commented since it could be an error if run in other computer:
     # plt.savefig(
-    #    'C:/Users/mange/Desktop/UoC/Winter 2024/GOPH_420/goph420_w2024_lab03_stAR/figures/MvN.pdf')
+    #    'C:/Users/mange/Desktop/UoC/Winter 2024/GOPH_420/goph420_w2024_lab03_stAR/figures/MvsN_S2.pdf')
+    # plt.show()
 
-    # Calculating the parameters a and b for section 1:
-    N1 = np.log10(N1)
-    N2 = np.log10(N2)
-    N3 = np.log10(N3)
-    N4 = np.log10(N4)
-    N5 = np.log10(N5)
 
-    Z1 = np.ones(len(N1))
-    Z1 = np.array([Z1,
-                   -1*M1])
-    Z1 = np.transpose(Z1)
+# Calculating graphs M vs N for section 3:
+    N3 = np.zeros(len(M))
 
-    a1, e1, rsq1 = rgr.multi_regress(N1, Z1)
-    N1a = np.matmul(Z1, a1)
-    plt.subplot(3, 2, 1)
-    plt.plot(
-        M1, 10**N1a, label=f'BFL: a = {np.round(a1[0], 3)}, b = {np.round(a1[1], 3)}, R^2 = {rsq1} ')
-    plt.legend(fontsize=17)
+    for j in range(0, len(M), 1):
+        count = 0
+        for i in range(0, len(y3), 1):
+            if y3[i] > M[j]:
+                count += 1
+        N3[j] = count
+    plt.figure(figsize=(20, 7))
+    plt.semilogy(M, N3, 'o', label="Measured events")
+    plt.xlabel("Magnitude order - M", fontsize=20)
+    plt.ylabel("Number of events - N", fontsize=20)
+    plt.title("Graph M vs N - Section 3", fontsize=20)
+    plt.xticks(fontsize=20)
+    plt.yticks(fontsize=20)
+    plt.grid(min)
 
-    # Calculating the parameters a and b for section 2:
-    Z2 = np.ones(len(N2))
-    Z2 = np.array([Z2,
-                   -1*M2])
-    Z2 = np.transpose(Z2)
+    # Building matrix Z for Section 3:
+    Z3 = np.ones([len(N3), 2])
+    Z3[:, 1] = Z3[:, 1]*(-M)
 
-    a2, e2, rsq2 = rgr.multi_regress(N2, Z2)
-    N2a = np.matmul(Z2, a2)
-    plt.subplot(3, 2, 2)
-    plt.plot(
-        M2, 10**N2a, label=f'BFL: a = {np.round(a2[0], 3)}, b = {np.round(a2[1], 3)}, R^2 = {rsq2} ')
-    plt.legend(fontsize=17)
+    # Solving for a and b for Section 3:
+    a3, e3, R23 = rgr.multi_regress(np.log10(N3), Z3)
+    print(f"Values of a and b for Section 3 are: {a3}")
+    print(f"Coefficient of determination for Section 3 is: {R23}")
 
-    # Calculating the parameters a and b for section 3:
-    Z3 = np.ones(len(N3))
-    Z3 = np.array([Z3,
-                   -1*M3])
-    Z3 = np.transpose(Z3)
-
-    a3, e3, rsq3 = rgr.multi_regress(N3, Z3)
-    N3a = np.matmul(Z3, a3)
-    plt.subplot(3, 2, 3)
-    plt.plot(
-        M3, 10**N3a, label=f'BFL: a = {np.round(a3[0], 3)}, b = {np.round(a3[1], 3)}, R^2 = {rsq3} ')
-    plt.legend(fontsize=17)
-
-    # Calculating the parameters a and b for section 4:
-    Z4 = np.ones(len(N4))
-    Z4 = np.array([Z4,
-                   -1*M4])
-    Z4 = np.transpose(Z4)
-
-    a4, e4, rsq4 = rgr.multi_regress(N4, Z4)
-    N4a = np.matmul(Z4, a4)
-    plt.subplot(3, 2, 4)
-    plt.plot(
-        M4, 10**N4a, label=f'BFL: a = {np.round(a4[0], 3)}, b = {np.round(a4[1], 3)}, R^2 = {rsq4} ')
-    plt.legend(fontsize=17)
-
-    # Calculating the parameters a and b for section 5:
-    Z5 = np.ones(len(N5))
-    Z5 = np.array([Z5,
-                   -1*M5])
-    Z5 = np.transpose(Z5)
-
-    a5, e5, rsq5 = rgr.multi_regress(N5, Z5)
-    N5a = np.matmul(Z5, a5)
-    plt.subplot(3, 2, 5)
-    plt.plot(
-        M5, 10**N5a, label=f'BFL: a = {np.round(a5[0], 3)}, b = {np.round(a5[1], 3)}, R^2 = {rsq5} ')
-    plt.legend(fontsize=17)
-
+    # Plotting results for Section 3:
+    N3_est = np.matmul(Z3, a3)
+    plt.plot(M, 10**N3_est, '-r',
+             label=f"LSQR | $a$ = {np.round(a3[0], 3)}, $b$ = {np.round(a3[1], 3)}, $R^2$ = {R23}")
+    plt.legend(fontsize=20)
     # Saving the image on the directory /figures. This section is commented since it could be an error if run in other computer:
     # plt.savefig(
-    #    'C:/Users/mange/Desktop/UoC/Winter 2024/GOPH_420/goph420_w2024_lab03_stAR/figures/MvN_results.pdf')
-    plt.show()
+    #    'C:/Users/mange/Desktop/UoC/Winter 2024/GOPH_420/goph420_w2024_lab03_stAR/figures/MvsN_S3.pdf')
+    # plt.show()
 
-    # Plotting the residuals for each day:
-    # Day 1:
-    plt.figure(figsize=(20, 6))
-    C5 = plt.plot(e1, '-', label='Section 1 residuals')
-    plt.xlabel('Data index')
-    plt.ylabel('Residual')
-    plt.title('Graphs of residuals for each day')
+    # Calculating graphs M vs N for section 4:
+    N4 = np.zeros(len(M))
+
+    for j in range(0, len(M), 1):
+        count = 0
+        for i in range(0, len(y4), 1):
+            if y4[i] > M[j]:
+                count += 1
+        N4[j] = count
+    plt.figure(figsize=(20, 7))
+    plt.semilogy(M, N4, 'o', label="Measured events")
+    plt.xlabel("Magnitude order - M", fontsize=20)
+    plt.ylabel("Number of events - N", fontsize=20)
+    plt.title("Graph M vs N - Section 4", fontsize=20)
+    plt.xticks(fontsize=20)
+    plt.yticks(fontsize=20)
     plt.grid(min)
 
-    # Day 2:
-    plt.plot(e2, '-', label='Section 2 residuals')
+    # Building matrix Z for Section 4:
+    Z4 = np.ones([len(N4), 2])
+    Z4[:, 1] = Z4[:, 1]*(-M)
+
+    # Solving for a and b for Section 4:
+    a4, e4, R24 = rgr.multi_regress(np.log10(N4), Z4)
+    print(f"Values of a and b for Section 4 are: {a4}")
+    print(f"Coefficient of determination for Section 4 is: {R24}")
+
+    # Plotting results for Section 4:
+    N4_est = np.matmul(Z4, a4)
+    plt.plot(M, 10**N4_est, '-r',
+             label=f"LSQR | $a$ = {np.round(a4[0], 3)}, $b$ = {np.round(a4[1], 3)}, $R^2$ = {R24}")
+    plt.legend(fontsize=20)
+    # Saving the image on the directory /figures. This section is commented since it could be an error if run in other computer:
+    # plt.savefig(
+    #    'C:/Users/mange/Desktop/UoC/Winter 2024/GOPH_420/goph420_w2024_lab03_stAR/figures/MvsN_S4.pdf')
+    # plt.show()
+
+ # Calculating graphs M vs N for section 5:
+    N5 = np.zeros(len(M))
+
+    for j in range(0, len(M), 1):
+        count = 0
+        for i in range(0, len(y5), 1):
+            if y5[i] > M[j]:
+                count += 1
+        N5[j] = count
+    plt.figure(figsize=(20, 7))
+    plt.semilogy(M, N5, 'o', label="Measured events")
+    plt.xlabel("Magnitude order - M", fontsize=20)
+    plt.ylabel("Number of events - N", fontsize=20)
+    plt.title("Graph M vs N - Section 5", fontsize=20)
+    plt.xticks(fontsize=20)
+    plt.yticks(fontsize=20)
     plt.grid(min)
 
-    # Day 3:
-    plt.plot(e3, '-', label='Section 3 residuals')
-    plt.grid(min)
+    # Building matrix Z for Section 5:
+    Z5 = np.ones([len(N5), 2])
+    Z5[:, 1] = Z5[:, 1]*(-M)
 
-    # Day 4:
-    plt.plot(e4, '-', label='Section 4 residuals')
-    plt.grid(min)
+    # Solving for a and b for Section 5:
+    a5, e5, R25 = rgr.multi_regress(np.log10(N5), Z5)
+    print(f"Values of a and b for Section 5 are: {a5}")
+    print(f"Coefficient of determination for Section 5 is: {R25}")
 
-    # Day 5:
-    plt.plot(e5, '-', label='Section 5 residuals')
-    plt.grid(min)
+    # Plotting results for Section 5:
+    N5_est = np.matmul(Z5, a5)
+    plt.plot(M, 10**N5_est, '-r',
+             label=f"LSQR | $a$ = {np.round(a5[0], 3)}, $b$ = {np.round(a5[1], 3)}, $R^2$ = {R25}")
+    plt.legend(fontsize=20)
+    # Saving the image on the directory /figures. This section is commented since it could be an error if run in other computer:
+    # plt.savefig(
+    #    'C:/Users/mange/Desktop/UoC/Winter 2024/GOPH_420/goph420_w2024_lab03_stAR/figures/MvsN_S5.pdf')
+    # plt.show()
 
+    # Plotting the residuals
+    plt.figure(figsize=(20, 7))
+    plt.plot(M, e1, '-', label="Residual of Section 1")
+    plt.plot(M, e2, '-', label="Residual of Section 2")
+    plt.plot(M, e3, '-', label="Residual of Section 3")
+    plt.plot(M, e4, '-', label="Residual of Section 4")
+    plt.plot(M, e5, '-', label="Residual of Section 5")
+    plt.ylabel("Residual of N [r]", fontsize=20)
+    plt.xlabel("Magnitude [M]", fontsize=20)
+    plt.title("Graph of residuals for each section", fontsize=20)
+    plt.xticks(fontsize=20)
+    plt.yticks(fontsize=20)
+    plt.grid(min)
     plt.legend()
-    # Saving the image on the directory /figures. This section is commented since it could be an error if run in other computer:
-    # plt.savefig(
-    #   'C:/Users/mange/Desktop/UoC/Winter 2024/GOPH_420/goph420_w2024_lab03_stAR/figures/residuals.pdf')
+    plt.savefig(
+        'C:/Users/mange/Desktop/UoC/Winter 2024/GOPH_420/goph420_w2024_lab03_stAR/figures/Residuals.pdf')
     plt.show()
 
 

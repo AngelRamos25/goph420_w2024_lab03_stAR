@@ -7,3 +7,4 @@ src/goph420_lab03.egg-info/SOURCES.txt
 src/goph420_lab03.egg-info/dependency_links.txt
 src/goph420_lab03.egg-info/requires.txt
 src/goph420_lab03.egg-info/top_level.txt
+tests/test_regression.py

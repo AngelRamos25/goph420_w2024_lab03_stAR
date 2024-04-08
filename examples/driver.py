@@ -296,7 +296,7 @@ def main():
     # plt.savefig(
     #    'C:/Users/mange/Desktop/UoC/Winter 2024/GOPH_420/goph420_w2024_lab03_stAR/figures/Residuals.pdf')
 
-    # To plot all the plots, if you don't want to see them all, comment this plt.show().
+    # To show all the plots uncomment this plt.show(). If you don't want to see them all, comment this plt.show().
     # plt.show()
 
 

@@ -293,9 +293,11 @@ def main():
     plt.yticks(fontsize=20)
     plt.grid(min)
     plt.legend()
-    plt.savefig(
-        'C:/Users/mange/Desktop/UoC/Winter 2024/GOPH_420/goph420_w2024_lab03_stAR/figures/Residuals.pdf')
-    plt.show()
+    # plt.savefig(
+    #    'C:/Users/mange/Desktop/UoC/Winter 2024/GOPH_420/goph420_w2024_lab03_stAR/figures/Residuals.pdf')
+
+    # To plot all the plots, if you don't want to see them all, comment this plt.show().
+    # plt.show()
 
 
 if __name__ == "__main__":
